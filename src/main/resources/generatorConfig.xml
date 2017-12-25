@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+     <properties resource="datasource.properties" />
+
+    <!-- 指定特定数据库的jdbc驱动jar包的位置 -->
+     <classPathEntry
+        location="${db.driverLocation}" />
+    <!--<classPathEntry-->
+            <!--location="C:\Users\DYLin\.m2\repository\mysql\mysql-connector-java\5.1.45\mysql-connector-java-5.1.45.jar" />-->
+
+    <context id="default" targetRuntime="MyBatis3">
+
+        <!-- 注释生成器 -->
+        <!-- optional:旨在为MyBatis Generator生成的各种元素（Java字段，Java方法，XML元素等）进行注释控制 -->
+        <commentGenerator>
+            <!-- 是否禁止在生成的注释中包含生成时间戳，默认false -->
+            <!--<property name="suppressDate" value="true" />-->
+            <!-- 是否禁止在生成的代码中包含任何注释，默认false -->
+            <property name="suppressAllComments" value="true" />
+            <!-- 是否在生成的注释中包含数据库表中的表和列注释，默认false -->
+            <!--<property name="addRemarkComments" value="true" />-->
+            <!-- 设置将日期写入生成的注释时使用的日期格式 -->
+            <!--<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>-->
+        </commentGenerator>
+
+        <!-- jdbc数据库连接 -->
+         <jdbcConnection
+            driverClass="${db.driverClassName}"
+            connectionURL="${db.url}"
+            userId="${db.username}"
+            password="${db.password}">
+        </jdbcConnection>
+        <!--<jdbcConnection-->
+                <!--driverClass="com.mysql.jdbc.Driver"-->
+                <!--connectionURL="jdbc:mysql://localhost:3306/school"-->
+                <!--userId="root"-->
+                <!--password="root">-->
+        <!--</jdbcConnection>-->
+
+        <!-- Java类型解析器 -->
+        <!-- optional：在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <!-- 用于指定MyBatis Generator是否应该强制使用java.math.BigDecimal作为DECIMAL和NUMERIC字段，而不是在可能的情况下替换整型。默认为false -->
+            <!--
+                当属性为false或未指定时，如果可能，默认Java类型解析器将尝试使JDBC DECIMAL和NUMERIC类型更容易处理，并替换Integral类型。替代规则如下：
+                 - 如果比例大于零，或者长度大于18，则将使用java.math.BigDecimal类型。
+                 - 如果比例为零，长度为10到18，那么Java类型解析器将替代java.lang.Long。
+                 - 如果比例为零，长度为5到9，那么Java类型解析器将替代java.lang.Integer。
+                 - 如果比例为零，且长度小于5，则Java类型解析器将替换java.lang.Short。
+
+                当属性为true时，如果数据库列的类型为DECIMAL或NUMERIC，则Java类型解析器将始终使用java.math.BigDecimal。
+            -->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类
+            targetPackage     指定生成的model生成所在的包名
+            targetProject     指定在该项目下所在的路径
+        -->
+        <!-- 生成Model类存放位置 -->
+        <javaModelGenerator
+                targetPackage="com.demo.mybatisExercise.domain"
+                targetProject="src/main/java">
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!-- mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
+        <!-- 生成映射文件存放位置 -->
+        <sqlMapGenerator
+                targetPackage="mappers"
+                targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <!-- 生成Dao类存放位置 -->
+        <javaClientGenerator
+                type="XMLMAPPER"
+                targetPackage="com.demo.mybatisExercise.mapper"
+                targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- 生成对应表及类名 -->
+        <table
+                tableName="student"
+                domainObjectName="Student"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+
+        </table>
+
+        <!-- mybatis插件的搭建 -->
+
+    </context>
+</generatorConfiguration>
